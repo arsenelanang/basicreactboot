@@ -1,4 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom';
 import {
   Collapse,
   Navbar,
@@ -20,120 +25,35 @@ import {
   Form, FormGroup, Label, Input, FormText
 } from 'reactstrap';
 
-class App extends Component {
-  constructor(props) {
-    super(props);
+//halaman import
+import About from './viewcomponent/About';
+import Topic from './viewcomponent/Topic';
+import Home from './viewcomponent/Home';
+import Header from './template/Header';
 
-    this.toggle = this.toggle.bind(this);
-    this.state = {
-      isOpen: false,
-      visible: true,
-      email: "",
-      password: "",
-      text:"isi text sebenarne"
-    };
-    this.onDismiss = this.onDismiss.bind(this);
-    this.emailChange = this.emailChange.bind(this);
-    this.passwordChange = this.passwordChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  emailChange(event) {
-   
-    this.setState({email: event.target.value.toUpperCase()});
-    this.setState({text: this.state.email});
-  }
-  passwordChange(event) {
-    this.setState({password: event.target.value.toUpperCase()});
-  }
-
-  handleSubmit(event) {
-    this.setState({text: this.state.email});
-  }
-  // handleChange(event) {
-  //   this.setState({value: event.target.value.toUpperCase()});
-  // }
-  onDismiss() {
-    this.setState({ visible: false });
-  }
-  
-  toggle() {
-    this.setState({
-      isOpen: !this.state.isOpen
-    });
-  }
+class App extends React.Component {
   render() {
     return (
-      <div>
-        <Navbar color="light" light expand="md">
-            <NavbarBrand href="/">React Barack</NavbarBrand>
-            <NavbarToggler onClick={this.toggle} />
-            <Collapse isOpen={this.state.isOpen} navbar>
-              <Nav className="ml-auto" navbar>
-                <NavItem>
-                  <NavLink href="/components/">Components</NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
-                </NavItem>
-                <UncontrolledDropdown nav inNavbar>
-                  <DropdownToggle nav caret>
-                    Options
-                  </DropdownToggle>
-                  <DropdownMenu right>
-                    <DropdownItem>
-                      Option 1
-                    </DropdownItem>
-                    <DropdownItem>
-                      Option 2
-                    </DropdownItem>
-                    <DropdownItem divider />
-                    <DropdownItem>
-                      Reset
-                    </DropdownItem>
-                  </DropdownMenu>
-                </UncontrolledDropdown>
-              </Nav>
-            </Collapse>
-          </Navbar>
+      
+      <Router>
+        <div>
+        <Header />
+          <ul>
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/about">About</Link></li>
+            <li><Link to="/topic">Topics</Link></li>
+          </ul>
 
-          <Alert color="info" isOpen={this.state.visible} toggle={this.onDismiss}>
-          I am an alert and I can be dismissed!
-          </Alert>
-          
-        <Container>
-          <Row>
-            <Col md="6">
-              <Form onSubmit={this.handleSubmit}>
-              <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-                <Label for="exampleEmail" className="mr-sm-2">Email</Label>
-                <Input type="text" value={this.state.email} onChange={this.emailChange} id="exampleEmail" placeholder="something@idk.cool" />
-              </FormGroup>
-              <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-                <Label for="examplePassword" className="mr-sm-2">Password</Label>
-                <Input type="text" value={this.state.password} onChange={this.passwordChange}  id="examplePassword" placeholder="don't tell!" />
-              </FormGroup>
-              <br />
-              <Button>Submit</Button>
-              </Form>
-            </Col>
-            <Col md="6">
-              <h1 className="display-3">Infinity Wars</h1>
-              <FormGroup>
-                <Label for="exampleText">Text Area</Label>
-                <Input type="textarea" value={this.state.text} name="text" id="exampleText" />
-              </FormGroup>
-              <p className="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
-              {/* <img src="https://cdn.shopify.com/s/files/1/0489/4081/products/one-piece-whitebeard-jolly-roger-sticker_1024x1024.jpg?v=1427615057" class="img-rounded"  alt="Cinque Terre" /> */}
-            </Col>
-          </Row>     
-        </Container>
-    </div>
+          <hr/>
+
+          <Route exact path="/" component={Home}/>
+          <Route path="/about" component={About}/>
+          <Route path="/topic" component={Topic}/>
+        </div>
+      </Router>
     );
   }
 }
 
 
-
 export default App;
-
