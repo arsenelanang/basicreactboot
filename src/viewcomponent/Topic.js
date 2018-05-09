@@ -28,13 +28,15 @@ class Topic extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            email : "asu",
-            password: "pasrah",
+            email : "email",
+            password: "password",
             visible: false,
             persons: [],
             text: "",
             price: "",
-            category_id: ""
+            category_id: "",
+            currentPage: 1,
+            todosPerPage: 3
             
           };
           
@@ -43,6 +45,13 @@ class Topic extends React.Component {
         this.fetchData = this.fetchData.bind(this);
         this.emailChange = this.emailChange.bind(this);
         this.passwordChange = this.passwordChange.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick(event) {
+      this.setState({
+        currentPage: Number(event.target.id)
+      });
     }
 
     emailChange(event) {
@@ -104,6 +113,8 @@ class Topic extends React.Component {
       axios.get(`http://localhost/restapi/product/read.php`)
         .then(res => {
           const persons = res.data.records;
+          console.log(persons, "hai");
+          // console.log(res, "hai");
           this.setState({ persons });
         })
     }
@@ -113,6 +124,45 @@ class Topic extends React.Component {
 
 
     render() {
+
+    const { persons, currentPage, todosPerPage } = this.state;
+
+    // Logic for displaying todos
+    const indexOfLastTodo = currentPage * todosPerPage;
+    const indexOfFirstTodo = indexOfLastTodo - todosPerPage;
+
+
+    // <th scope="row">{ this.state.persons.map(person => <p key={person.id}>{person.id}</p>)}</th>
+    //                     <td>{ this.state.persons.map(person => <p key={person.id}>{person.name}</p>)}</td>
+    //                     <td>{ this.state.persons.map(person => <p key={person.id}>{person.price}</p>)}</td>
+    //                     <td>{ this.state.persons.map(person => <p key={person.id}>{person.description}</p>)}</td>
+    const currentTodos = this.state.persons.slice(indexOfFirstTodo, indexOfLastTodo);
+    console.log(currentTodos);
+
+    const renderTodos = currentTodos.map((person) => {
+      return <li key={person.id}>{person.id}</li>;
+    });
+
+    // Logic for displaying page numbers
+    const pageNumbers = [];
+    for (let i = 1; i <= Math.ceil(this.state.persons.length / todosPerPage); i++) {
+      pageNumbers.push(i);
+    }
+
+    const renderPageNumbers = pageNumbers.map(number => {
+      return (
+        <li
+          key={number}
+          id={number}
+          onClick={this.handleClick}
+        >
+          {number}
+        </li>
+      );
+    });
+
+
+
       return (
         <div>
           <p>ini adalah halaman Topic</p>
@@ -124,33 +174,7 @@ class Topic extends React.Component {
           <Container>
             <Row>
                 <Col md="6">
-                <OverlayLoader 
-                    color={'black'} // default is white
-                    loader="DotLoader" // check below for more loaders
-                    text="Loading... Please wait!" 
-                    active={true} 
-                    backgroundColor={'black'} // default is black
-                    opacity=".4" // default is .9  
-                    >
-                    {/* PulseLoader
-                    * RotateLoader
-                    * BeatLoader
-                    * RiseLoader
-                    * SyncLoader
-                    * GridLoader
-                    * ClipLoader
-                    * FadeLoader
-                    * ScaleLoader
-                    * SquareLoader
-                    * PacmanLoader
-                    * SkewLoader
-                    * RingLoader
-                    * MoonLoader
-                    * DotLoader
-                    * BounceLoader */}
-                    
-                    
-                </OverlayLoader>
+
                 <Form >
                 <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
                     <Label for="exampleEmail" className="mr-sm-2">Email</Label>
@@ -189,6 +213,14 @@ class Topic extends React.Component {
                     </tbody>
                   </Table>
                 </Col>
+                <div>
+        <ul>
+          {renderTodos}
+        </ul>
+        <ul id="page-numbers">
+          {renderPageNumbers}
+        </ul>
+      </div>
                 
             </Row>     
             {/* <ul>
