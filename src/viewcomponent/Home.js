@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import {Alert, Form, FormGroup,Input} from 'reactstrap';
 import ChildComponent from '../component/childcomponent';
 import OrderSumary from '../component/ordersumary/OrderSumary';
+import Order from '../component/ordersumary/Order';
+import Modal from '../component/UI/Modal/Modal';
 
 const INGREDIENT_PRICES = {
   salad: 0.5,
@@ -34,8 +36,11 @@ class Home extends React.Component {
     onDismiss() {
         this.setState({ visible: false });
     }
-    purchaseHandle(){
-      alert("masuk");
+    purchaseHandle = () =>{
+     
+      this.setState ({
+        purchasing: true
+      });
     }
 
 
@@ -96,13 +101,24 @@ class Home extends React.Component {
       
     }
 
+    purchaseCancelHandler = () => {
+      this.setState({purchasing: false});
+    }
+
+    purchaseContinueHandler = () => {
+        alert('You continue!');
+    }
+
     render() {
       return (
         <div>
-          <OrderSumary 
+          <Order 
           ingredients = {this.state.ingredients}
           
+          
           />
+
+
 
           <ChildComponent
            price={this.state.totalPrice}
@@ -112,6 +128,14 @@ class Home extends React.Component {
            ingredientRemoved = {this.ingredientsRemoveHandler}
            
            />
+
+          <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
+            <OrderSumary 
+            ingredients={this.state.ingredients}
+            price={this.state.totalPrice}
+            purchaseCancelled={this.purchaseCancelHandler}
+            purchaseContinued={this.purchaseContinueHandler} />
+          </Modal>
           
         </div>
       );

@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import Button from '../UI/Button/Button';
 
-class OrderSumary extends Component {
+class Order extends Component {
     render () {
         const ingredientSummary = Object.keys( this.props.ingredients)
         .map( igKey => {
@@ -11,20 +10,17 @@ class OrderSumary extends Component {
                 </li>
             );
         });
-
+        const b ="awih";
         return(
             <div>
                 <h3>Your order</h3>
                 <ul>
                     {ingredientSummary}
                 </ul>
-                <p><strong>Total Price: {this.props.price.toFixed( 2 )}</strong></p>
-                <p>Continue to Checkout?</p>
-                <Button btnType="Danger" clicked={this.props.purchaseCancelled}>CANCEL</Button>
-                <Button btnType="Success" clicked={this.props.purchaseContinued}>CONTINUE</Button>
+
             </div>
         )
     }
 }
 
-export default OrderSumary;
+export default Order;
