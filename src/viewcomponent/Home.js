@@ -70,7 +70,30 @@ class Home extends React.Component {
       );
       this.updatePurchaseState(updatedIngredients);
       
+    }
+    ingredientsRemoveHandler = (type) =>{
+      console.log(type);
+      const oldCount = this.state.ingredients[type];
+      if ( oldCount <= 0 ) {
+        return;
+      }
+      const updatedCount = oldCount - 1;
+      const updatedIngredients = {
+        ...this.state.ingredients
+      };
+      console.log(updatedIngredients);
+      updatedIngredients[type] = updatedCount;
 
+      const priceAddition = INGREDIENT_PRICES[type];
+      const oldPrice = this.state.totalPrice;
+      const newprice = oldPrice - priceAddition;
+      this.setState( {
+          totalPrice : newprice, 
+          ingredients : updatedIngredients
+        }
+      );
+      this.updatePurchaseState(updatedIngredients);
+      
     }
 
     render() {
@@ -80,15 +103,13 @@ class Home extends React.Component {
           ingredients = {this.state.ingredients}
           
           />
-          <Alert color="info" isOpen={this.state.visible} toggle={this.onDismiss}>
-          {this.props.alertBaru}
-          </Alert>
-          <p>asu</p>
+
           <ChildComponent
            price={this.state.totalPrice}
            purchasable = {this.state.purchasable}
            ordered = {this.purchaseHandle}
            ingredientAdded = {this.ingredientsAddHandler}
+           ingredientRemoved = {this.ingredientsRemoveHandler}
            
            />
           
