@@ -18,7 +18,8 @@ import {
     DropdownToggle,
     DropdownMenu,
     DropdownItem,
-    Form, FormGroup, Label, Input, FormText,Table 
+    Form, FormGroup, Label, Input, FormText,Table ,
+    Pagination, PaginationItem, PaginationLink
   } from 'reactstrap';
   import axios from 'axios';
   import OverlayLoader from 'react-loading-indicator-overlay/lib/OverlayLoader';
@@ -36,7 +37,7 @@ class Topic extends React.Component {
             price: "",
             category_id: "",
             currentPage: 1,
-            todosPerPage: 3
+            todosPerPage: 10
             
           };
           
@@ -139,8 +140,17 @@ class Topic extends React.Component {
     const currentTodos = this.state.persons.slice(indexOfFirstTodo, indexOfLastTodo);
     console.log(currentTodos);
 
-    const renderTodos = currentTodos.map((person) => {
-      return <li key={person.id}>{person.id}</li>;
+    const renderTodos = currentTodos.map((person, index) => {
+      return (<tbody key={index}>
+              <tr>
+              <th scope="row"> <p key={person.id}>{person.id}</p></th>
+              <td> <p key={person.id}>{person.name}</p></td>
+              <td> <p key={person.id}>{person.price}</p></td>
+              <td> <p key={person.id}>{person.description}</p></td>
+              </tr>
+              </tbody>
+              );
+                      
     });
 
     // Logic for displaying page numbers
@@ -151,13 +161,15 @@ class Topic extends React.Component {
 
     const renderPageNumbers = pageNumbers.map(number => {
       return (
-        <li
-          key={number}
+
+          <PaginationLink href="#" key={number}
           id={number}
-          onClick={this.handleClick}
-        >
-          {number}
-        </li>
+          onClick={this.handleClick}>
+            {number}
+          </PaginationLink>
+      
+        
+
       );
     });
 
@@ -202,7 +214,7 @@ class Topic extends React.Component {
                         <th>Username</th>
                       </tr>
                     </thead>
-                    <tbody>
+                    {/* <tbody>
                       <tr>
                         <th scope="row">{ this.state.persons.map(person => <p key={person.id}>{person.id}</p>)}</th>
                         <td>{ this.state.persons.map(person => <p key={person.id}>{person.name}</p>)}</td>
@@ -210,17 +222,16 @@ class Topic extends React.Component {
                         <td>{ this.state.persons.map(person => <p key={person.id}>{person.description}</p>)}</td>
                       </tr>
                       
-                    </tbody>
+                    </tbody> */}
+                    {renderTodos}
                   </Table>
+
+                  <Pagination>
+                  {renderPageNumbers}
+                  </Pagination>
                 </Col>
-                <div>
-        <ul>
-          {renderTodos}
-        </ul>
-        <ul id="page-numbers">
-          {renderPageNumbers}
-        </ul>
-      </div>
+                
+ 
                 
             </Row>     
             {/* <ul>
