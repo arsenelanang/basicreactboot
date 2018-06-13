@@ -150,8 +150,8 @@ class Redux extends React.Component {
                     price={this.props.price}
                     purchasable={this.updatePurchaseState(this.props.ings)}
                     ordered = {this.purchaseHandle}
-                    ingredientAdded = {this.ingredientsAddHandler}
-                    ingredientRemoved = {this.ingredientsRemoveHandler}
+                    ingredientAdded = {this.props.onIngredientAdded}
+                    ingredientRemoved = {this.props.onIngredientRemoved}
                     />
                 </div>               
             );
@@ -200,6 +200,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => {
+    console.log(dispatch)
     return {
         onIngredientAdded: (ingName) => dispatch({type: actionTypes.ADD_INGREDIENT, ingredientName: ingName}),
         onIngredientRemoved: (ingName) => dispatch({type: actionTypes.REMOVE_INGREDIENT, ingredientName: ingName})
