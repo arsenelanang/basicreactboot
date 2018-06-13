@@ -39,12 +39,12 @@ class Redux extends React.Component {
     // onDismiss() {
     //     this.setState({ visible: false });
     // }
-    // purchaseHandle = () =>{
+    purchaseHandle = () =>{
      
-    //   this.setState ({
-    //     purchasing: true
-    //   });
-    // }
+      this.setState ({
+        purchasing: true
+      });
+    }
     componentDidMount () {
         console.log(this.props);
         // axios.get( 'https://react-my-burger.firebaseio.com/ingredients.json' )
@@ -142,6 +142,7 @@ class Redux extends React.Component {
         disabledInfo[key] = disabledInfo[key] <= 0
     }
     let order = null;
+    let ordersumary = null;
     let burger = <p>Mugiwaraaaa</p>;
     if ( this.props.ings ) {
           burger = (
@@ -160,6 +161,18 @@ class Redux extends React.Component {
             //     price={this.props.price}
             //     purchaseCancelled={this.purchaseCancelHandler}
             //     purchaseContinued={this.purchaseContinueHandler} />;
+            ordersumary = (
+                <div>
+                    <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
+                        <OrderSumary 
+                        ingredients={this.props.ings}
+                        price={this.props.price}
+                        purchaseCancelled={this.purchaseCancelHandler}
+                        purchaseContinued={this.purchaseContinueHandler} />
+                    </Modal>
+                </div>
+
+            );
             order = <Order 
                     ingredients = {this.props.ings}
                     />
@@ -174,17 +187,13 @@ class Redux extends React.Component {
 
           {burger}
 
+          {ordersumary}
 
 
 
 
-          {/* <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
-            <OrderSumary 
-            ingredients={this.state.ingredients}
-            price={this.state.totalPrice}
-            purchaseCancelled={this.purchaseCancelHandler}
-            purchaseContinued={this.purchaseContinueHandler} />
-          </Modal> */}
+
+          
           
         </div>
       );
