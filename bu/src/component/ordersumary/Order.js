@@ -10,6 +10,7 @@ class Order extends Component {
                 </li>
             );
         });
+        const b ="awih";
         return(
             <div>
                 <h3>Your order</h3>

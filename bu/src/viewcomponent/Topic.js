@@ -1,22 +1,28 @@
-import React from 'react';
+import React, { Component } from 'react';
+import Home from './Home';
 import {
-   
-
-
-
+    Collapse,
+    Navbar,
+    NavbarToggler,
+    NavbarBrand,
+    Nav,
+    NavItem,
+    NavLink,
     Container,
     Row,
     Col,
-   
+    Jumbotron,
     Button,
     Alert,
-    
-   
-    Form, FormGroup, Label, Input, Table ,
-    Pagination, PaginationLink
+    UncontrolledDropdown,
+    DropdownToggle,
+    DropdownMenu,
+    DropdownItem,
+    Form, FormGroup, Label, Input, FormText,Table ,
+    Pagination, PaginationItem, PaginationLink
   } from 'reactstrap';
   import axios from 'axios';
-  // import OverlayLoader from 'react-loading-indicator-overlay/lib/OverlayLoader';
+  import OverlayLoader from 'react-loading-indicator-overlay/lib/OverlayLoader';
 
 
 class Topic extends React.Component {
@@ -120,7 +126,7 @@ class Topic extends React.Component {
 
     render() {
 
-    const { currentPage, todosPerPage } = this.state;
+    const { persons, currentPage, todosPerPage } = this.state;
 
     // Logic for displaying todos
     const indexOfLastTodo = currentPage * todosPerPage;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   Pagination,
   PaginationItem,
@@ -50,7 +50,7 @@ class About extends React.Component {
     let currentTodos = todos.slice(indexOfFirstTodo, indexOfLastTodo);
      let prev  = currentPage > 0 ? (currentPage -1) :0;
      const last = Math.ceil(todos.length/todosPerPage);
-    //  let next  = (last === currentPage) ?currentPage: currentPage +1;
+     let next  = (last === currentPage) ?currentPage: currentPage +1;
 
     // Logic for displaying page numbers
     let pageNumbers = [];

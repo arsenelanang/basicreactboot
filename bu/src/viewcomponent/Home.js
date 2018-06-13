@@ -1,5 +1,5 @@
-import React from 'react';
-// import {Alert, Form, FormGroup,Input} from 'reactstrap';
+import React, { Component } from 'react';
+import {Alert, Form, FormGroup,Input} from 'reactstrap';
 import ChildComponent from '../component/childcomponent';
 import OrderSumary from '../component/ordersumary/OrderSumary';
 import Order from '../component/ordersumary/Order';
